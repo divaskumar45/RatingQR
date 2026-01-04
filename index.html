@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mera First Page</title>
+</head>
+<body>
+
+  <h1>Namaste 🙏</h1>
+  <p>Ye meri pehli website hai.</p>
+
+  <button onclick="hello()">Click Me</button>
+  <h3>Apna experience rate karein</h3>
+
+<div>
+  <span onclick="setRating(1)">⭐</span>
+  <span onclick="setRating(2)">⭐</span>
+  <span onclick="setRating(3)">⭐</span>
+  <span onclick="setRating(4)">⭐</span>
+  <span onclick="setRating(5)">⭐</span>
+</div>
+
+<p id="result"></p>
+
+  <script>
+
+  // 👉 LINE 1 (script ke andar)
+  const googleReviewLink = "https://g.page/r/YOUR_GOOGLE_ID/review";
+
+  // 👉 LINE 2–6
+  function hello() {
+    alert("Badhai ho 🎉 Button kaam kar raha hai!");
+  }
+
+  // 👉 LINE 7–16 (MOST IMPORTANT)
+  function setRating(star) {
+
+    if (star >= 4) {
+      alert("Dhanyavaad 🙏 Google par review dein");
+      window.location.href = googleReviewLink;
+    } else {
+      document.getElementById("result").innerText =
+        "Dhanyavaad! Aapka feedback humare liye important hai.";
+    }
+
+  }
+
+</script>
+
+
+
+</body>
+</html>
