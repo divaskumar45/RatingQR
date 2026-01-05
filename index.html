@@ -6,56 +6,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  margin: 0;
+body{
+  margin:0;
   font-family: Arial, sans-serif;
-  background: #eef3f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  background:#eef3fb;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
 }
-
-.card {
-  background: #ffffff;
-  width: 90%;
-  max-width: 360px;
-  padding: 25px;
-  border-radius: 14px;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+.card{
+  background:#fff;
+  width:90%;
+  max-width:420px;
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 15px 30px rgba(0,0,0,.12);
+  text-align:center;
 }
-
-h1 {
-  margin: 0;
-  font-size: 22px;
+h2{margin:0}
+p{color:#666;font-size:14px}
+.stars span{
+  font-size:36px;
+  cursor:pointer;
+  color:#ddd;
 }
-
-p {
-  color: #555;
-  font-size: 14px;
+.stars span.active{color:#f5b400}
+form{
+  display:none;
+  margin-top:20px;
 }
-
-.stars span {
-  font-size: 34px;
-  cursor: pointer;
-  color: #ddd;
+input,textarea{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
 }
-
-.stars span:hover,
-.stars span:hover ~ span {
-  color: #ddd;
-}
-
-.stars span:hover,
-.stars span.active {
-  color: #f4b400;
-}
-
-.note {
-  margin-top: 15px;
-  font-size: 13px;
-  color: #666;
+button{
+  margin-top:15px;
+  padding:12px;
+  width:100%;
+  border:none;
+  border-radius:8px;
+  background:#ff5c8a;
+  color:#fff;
+  font-size:16px;
 }
 </style>
 </head>
@@ -63,10 +59,9 @@ p {
 <body>
 
 <div class="card">
-  <h1>ANAS PATHOLOGY</h1>
+  <h2>ANAS PATHOLOGY</h2>
   <p>Your feedback helps us improve our service</p>
-
-  <p><strong>Please rate your experience</strong></p>
+  <strong>Please rate your experience</strong>
 
   <div class="stars">
     <span onclick="rate(1)">★</span>
@@ -76,26 +71,40 @@ p {
     <span onclick="rate(5)">★</span>
   </div>
 
-  <div class="note">
-    ⭐ 4–5 stars → Google Review <br>
-    ⭐ 1–3 stars → Private Feedback
-  </div>
+  <form id="feedbackForm">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="tel" id="phone" placeholder="Your Phone Number" required>
+    <textarea id="msg" placeholder="Your feedback"></textarea>
+    <button type="button" onclick="sendWhatsApp()">Submit</button>
+  </form>
 </div>
 
 <script>
-function rate(stars) {
+const GOOGLE_REVIEW_LINK = "https://www.google.com/search?q=the+eye+centre&client=ms-android-motorola-rvo3&hs=MTRU&sca_esv=a7edb0de10d9816f&sxsrf=AE3TifMlu2x8XcRrKjF9oP8MGkSOJgDfgA:1767618763813&udm=1&lsack=y7hbacGeMb7LqfkPnpG32QU&sa=X&ved=2ahUKEwiBsI-EvfSRAxW-ZSoJHZ7ILVsQxMEEegQIExAB&biw=433&bih=878&dpr=2.81#vhid=/g/11t832wfgn&vssid=dcptpi";
+const WHATSAPP_NUMBER = "918416987674";
 
-  // ⭐⭐⭐⭐–⭐⭐⭐⭐⭐ → GOOGLE REVIEW
-  if (stars >= 4) {
-    window.location.href =
-    "https://www.google.com/search?q=the+eye+centre&client=ms-android-motorola-rvo3&hs=MTRU&sca_esv=a7edb0de10d9816f&sxsrf=AE3TifMlu2x8XcRrKjF9oP8MGkSOJgDfgA:1767618763813&udm=1&lsack=y7hbacGeMb7LqfkPnpG32QU&sa=X&ved=2ahUKEwiBsI-EvfSRAxW-ZSoJHZ7ILVsQxMEEegQIExAB&biw=433&bih=878&dpr=2.81#vhid=/g/11t832wfgn&vssid=dcptpi";
-  }
+function rate(star){
+  document.querySelectorAll(".stars span").forEach((s,i)=>{
+    s.classList.toggle("active", i < star);
+  });
 
-  // ⭐–⭐⭐⭐ → WHATSAPP FEEDBACK
-  else {
-    window.location.href =
-    "https://wa.me/91705005215text=Hello%20ANAS%20PATHOLOGY,%20I%20want%20to%20share%20my%20feedback.";
+  if(star >= 4){
+    window.location.href = GOOGLE_REVIEW_LINK;
+  } else {
+    document.getElementById("feedbackForm").style.display="block";
   }
+}
+
+function sendWhatsApp(){
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let msg = document.getElementById("msg").value;
+
+  let text =
+    `Feedback for ANAS PATHOLOGY\n\nName: ${name}\nPhone: ${phone}\nMessage: ${msg}`;
+
+  window.location.href =
+    `https://wa.me/${WHATSAPP_NUMBER}?text=` + encodeURIComponent(text);
 }
 </script>
 
