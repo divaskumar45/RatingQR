@@ -1,52 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Mera First Page</title>
-</head>
-<body>
+  <meta charset="UTF-8">
+  <title>ANAS PATHOLOGY – Feedback</title>
 
-  <h1>Namaste 🙏</h1>
-  <p>Ye meri pehli website hai.</p>
-
-  <button onclick="hello()">Click Me</button>
-  <h3>Apna experience rate karein</h3>
-
-<div>
-  <span onclick="setRating(1)">⭐</span>
-  <span onclick="setRating(2)">⭐</span>
-  <span onclick="setRating(3)">⭐</span>
-  <span onclick="setRating(4)">⭐</span>
-  <span onclick="setRating(5)">⭐</span>
-</div>
-
-<p id="result"></p>
-
-  <script>
-
-  // 👉 LINE 1 (script ke andar)
-  const googleReviewLink = "https://www.google.com/search?q=the+eye+centre&client=ms-android-motorola-rvo3&hs=MTRU&sca_esv=a7edb0de10d9816f&sxsrf=AE3TifMlu2x8XcRrKjF9oP8MGkSOJgDfgA:1767618763813&udm=1&lsack=y7hbacGeMb7LqfkPnpG32QU&sa=X&ved=2ahUKEwiBsI-EvfSRAxW-ZSoJHZ7ILVsQxMEEegQIExAB&biw=433&bih=878&dpr=2.81#vhid=/g/11t832wfgn&vssid=dcptpi";
-
-  // 👉 LINE 2–6
-  function hello() {
-    alert("Badhai ho 🎉 Button kaam kar raha hai!");
-  }
-
-  // 👉 LINE 7–16 (MOST IMPORTANT)
-  function setRating(star) {
-
-    if (star >= 4) {
-      alert("Dhanyavaad 🙏 Google par review dein");
-      window.location.href = googleReviewLink;
-    } else {
-      document.getElementById("result").innerText =
-        "Dhanyavaad! Aapka feedback humare liye important hai.";
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #eef2f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
+    .card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+      font-size: 22px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 20px 0 10px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .stars span {
+      font-size: 34px;
+      cursor: pointer;
+      margin: 6px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .form {
+      display: none;
+      margin-top: 15px;
+      text-align: left;
+    }
+
+    .form input,
+    .form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .form button {
+      margin-top: 12px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #25D366;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>ANAS PATHOLOGY</h1>
+  <p class="subtitle">Your feedback helps us improve our service</p>
+
+  <h2>Please rate your experience</h2>
+
+  <div class="stars">
+    <span onclick="setRating(1)">⭐</span>
+    <span onclick="setRating(2)">⭐</span>
+    <span onclick="setRating(3)">⭐</span>
+    <span onclick="setRating(4)">⭐</span>
+    <span onclick="setRating(5)">⭐</span>
+  </div>
+
+  <p class="note">
+    ⭐ 4–5 stars → Google Review<br>
+    ⭐ 1–3 stars → Private Feedback
+  </p>
+
+  <!-- NEGATIVE FEEDBACK FORM -->
+  <div class="form" id="feedbackForm">
+    <input type="text" id="name" placeholder="Your Name">
+    <input type="text" id="phone" placeholder="Phone Number">
+    <textarea id="message" placeholder="Please share your feedback"></textarea>
+    <button onclick="sendWhatsApp()">Submit Feedback</button>
+  </div>
+</div>
+
+<script>
+  /* 🔴 CHANGE THESE TWO VALUES ONLY */
+  const googleReviewLink = "PASTE_GOOGLE_REVIEW_LINK_HERE";
+  const whatsappNumber = "91XXXXXXXXXX"; // with country code
+
+  let selectedRating = 0;
+
+  function setRating(star) {
+    selectedRating = star;
+
+    if (star >= 4) {
+      alert("Thank you! Redirecting you to Google Review 🙏");
+      window.location.href = googleReviewLink;
+    } else {
+      document.getElementById("feedbackForm").style.display = "block";
+    }
   }
 
+  function sendWhatsApp() {
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const msg = document.getElementById("message").value;
+
+    const text =
+      `ANAS PATHOLOGY Feedback%0A` +
+      `Rating: ${selectedRating} Star%0A` +
+      `Name: ${name}%0A` +
+      `Phone: ${phone}%0A` +
+      `Message: ${msg}`;
+
+    const url = `https://wa.me/${whatsappNumber}?text=${text}`;
+    window.open(url, "_blank");
+  }
 </script>
-
-
 
 </body>
 </html>
